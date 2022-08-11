@@ -1,0 +1,27 @@
+{
+  "name": "mi-primera-app-node-maravillosa-fua-que-momentazo-estoy-a-punto-de-vivir",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "ts": "tsc",
+    "ts:dev": "tsc -w",
+    "start": "node .",
+    "start:dev": "nodemon -q"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.7.1",
+    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/parser": "^5.33.0",
+    "eslint": "^8.21.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "nodemon": "^2.0.19",
+    "typescript": "^4.7.4"
+  }
+}
