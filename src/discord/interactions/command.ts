@@ -15,6 +15,7 @@ const processChatCommand = async (
 
   let {
     nickname,
+    user,
     // eslint-disable-next-line prefer-const
     user: { username },
   } = await guild.members.fetch(interaction.user);
@@ -25,6 +26,10 @@ const processChatCommand = async (
   try {
     const channel = guild.channels.cache.get(channelId);
     const category = guild.channels.cache.get(channel.parentId);
+
+    const messages = await (
+      channel as discord.BaseGuildTextChannel
+    ).messages.fetch();
 
     const deliveryData = {
       category,
@@ -37,7 +42,22 @@ const processChatCommand = async (
       channel.name
     ).replace(`${process.env.BOOTCAMP}-`, "");
 
-    console.log(chalk.yellow(challengeName));
+    console.log(chalk.yellow(`>>>>> ${challengeName} <<<<<`));
+
+    const sameDeliveryMessage = messages.find((message) =>
+      message.content.toLowerCase().includes(`${nickname} - ${challengeName}`)
+    );
+
+    if (sameDeliveryMessage) {
+      await sameDeliveryMessage.delete();
+      console.log(
+        chalk.green("Deleted previous delivery of the same challenge")
+      );
+      await interaction.reply({
+        content: `${user}, he borrado tu entrega anterior, se sustituirá por ésta`,
+        ephemeral: true,
+      });
+    }
 
     const frontRepo = options.getString("front-repo");
     const frontProd = options.getString("front-prod");
@@ -79,12 +99,17 @@ const processChatCommand = async (
       replyContent += `Back - prod: ${backProd}`;
     }
 
-    await interaction.reply({
-      content: replyContent,
-      flags: 4,
-    });
-
-    await Challenge.find({ week: 1, number: "2" });
+    if (sameDeliveryMessage) {
+      await interaction.followUp({
+        content: replyContent,
+        flags: 4,
+      });
+    } else {
+      await interaction.reply({
+        content: replyContent,
+        flags: 4,
+      });
+    }
   } catch (error) {
     console.log(chalk.red(error.message));
 
