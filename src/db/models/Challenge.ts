@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose";
+import { IChallenge } from "../../types";
 
-const ChallengeSchema = new Schema({
+const ChallengeSchema = new Schema<IChallenge>({
   name: {
     type: String,
     unique: true,

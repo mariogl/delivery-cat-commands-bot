@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const connectDB = (connectionString: string) =>
   new Promise((resolve, reject) => {
-    mongoose.set("debug", false);
+    mongoose.set("debug", true);
     mongoose.set("toJSON", {
       virtuals: true,
       transform: (doc, ret) => {

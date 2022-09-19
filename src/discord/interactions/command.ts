@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import discord from "discord.js";
 import Challenge from "../../db/models/Challenge.js";
+import Project from "../../db/models/Project.js";
 import {
   checkProd,
   checkRepo,
@@ -15,6 +16,7 @@ const processChatCommand = async (
 
   let {
     nickname,
+    // eslint-disable-next-line prefer-const
     user,
     // eslint-disable-next-line prefer-const
     user: { username },
@@ -50,6 +52,7 @@ const processChatCommand = async (
 
     if (sameDeliveryMessage) {
       await sameDeliveryMessage.delete();
+      await Project.deleteOne({ name: `${nickname} - ${challengeName}` });
       console.log(
         chalk.green("Deleted previous delivery of the same challenge")
       );
@@ -98,6 +101,37 @@ const processChatCommand = async (
       replyContent += `Back - repo: ${backRepo}`;
       replyContent += `Back - prod: ${backProd}`;
     }
+
+    let challengeDB = await Challenge.findOne({
+      name: challengeName,
+    });
+
+    if (!challengeDB) {
+      challengeDB = await Challenge.create({
+        name: challengeName,
+        week: challengeName[1],
+        number: challengeName.split("ch")[1],
+      });
+    }
+
+    await Project.create({
+      challenge: challengeDB.id,
+      name: `${nickname} - ${challengeName}`,
+      repo: {
+        front: frontRepo,
+        back: backRepo,
+      },
+      prod: {
+        front: frontProd,
+        back: backProd,
+      },
+      student: nickname,
+      trello: "",
+      sonarKey: {
+        front: "",
+        back: "",
+      },
+    });
 
     if (sameDeliveryMessage) {
       await interaction.followUp({
