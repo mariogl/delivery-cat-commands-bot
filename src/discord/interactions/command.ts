@@ -51,21 +51,17 @@ const processChatCommand = async (
     );
 
     if (sameDeliveryMessage) {
-      await sameDeliveryMessage.delete();
-      await Project.deleteOne({ name: `${nickname} - ${challengeName}` });
-      console.log(
-        chalk.green("Deleted previous delivery of the same challenge")
-      );
-      await interaction.reply({
-        content: `${user}, he borrado tu entrega anterior, se sustituirá por ésta`,
-        ephemeral: true,
-      });
+      console.log(chalk.green("Found previous delivery of the same challenge"));
     }
 
     const frontRepo = options.getString("front-repo");
     const frontProd = options.getString("front-prod");
     const backRepo = options.getString("back-repo");
     const backProd = options.getString("back-prod");
+
+    if (!frontRepo && !backRepo) {
+      throw new Error("Entrega incompleta 😫");
+    }
 
     if ((!frontRepo && frontProd) || (frontRepo && !frontProd)) {
       throw new Error(
@@ -114,29 +110,55 @@ const processChatCommand = async (
       });
     }
 
-    await Project.create({
-      challenge: challengeDB.id,
+    const projectExists = await Project.findOne({
       name: `${nickname} - ${challengeName}`,
-      repo: {
-        front: frontRepo,
-        back: backRepo,
-      },
-      prod: {
-        front: frontProd,
-        back: backProd,
-      },
-      student: nickname,
-      trello: "",
-      sonarKey: {
-        front: "",
-        back: "",
-      },
     });
 
+    if (!projectExists) {
+      await Project.create({
+        challenge: challengeDB.id,
+        name: `${nickname} - ${challengeName}`,
+        repo: {
+          front: frontRepo,
+          back: backRepo,
+        },
+        prod: {
+          front: frontProd,
+          back: backProd,
+        },
+        student: nickname,
+        trello: "",
+        sonarKey: {
+          front: "",
+          back: "",
+        },
+      });
+    } else {
+      await Project.findByIdAndUpdate(projectExists.id, {
+        challenge: challengeDB.id,
+        name: `${nickname} - ${challengeName}`,
+        repo: {
+          front: frontRepo,
+          back: backRepo,
+        },
+        prod: {
+          front: frontProd,
+          back: backProd,
+        },
+        student: nickname,
+        trello: "",
+        sonarKey: {
+          front: "",
+          back: "",
+        },
+      });
+    }
+
     if (sameDeliveryMessage) {
-      await interaction.followUp({
-        content: replyContent,
-        flags: 4,
+      sameDeliveryMessage.edit(replyContent);
+      await interaction.reply({
+        content: `${user}, he actualizado tu entrega anterior con los nuevos datos 👌`,
+        ephemeral: true,
       });
     } else {
       await interaction.reply({

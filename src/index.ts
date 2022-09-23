@@ -13,9 +13,11 @@ import connectDB from "./db/index.js";
     .listen(process.env.PORT || 8080, () =>
       console.log(chalk.green("Server up"))
     );
+
   await connectDB(process.env.MONGODB_CONNECTION).catch((error) => {
     console.log(chalk.red(`Error on starting database: ${error.message}`));
     throw new Error();
   });
+
   console.log(chalk.blue("Connected to database"));
 })();
