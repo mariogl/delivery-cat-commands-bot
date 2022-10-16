@@ -7,7 +7,8 @@
     "build": "tsc",
     "ts:dev": "tsc -w",
     "start": "node .",
-    "start:dev": "nodemon -q"
+    "start:dev": "nodemon -q",
+    "commands": "node dist/discord/deploy-commands"
   },
   "keywords": [],
   "author": "",

@@ -9,6 +9,10 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.once("ready", () => {
   console.log(chalk.green("Bot ready and waiting for commands..."));
+  console.log(chalk.yellow("Bot installed on servers:"));
+  client.guilds.cache.forEach((guild) => {
+    console.log(chalk.yellow(`${guild.name} (${guild.id})`));
+  });
 });
 
 client.login(process.env.DISCORD_BOT_TOKEN);
