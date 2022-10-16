@@ -97,6 +97,10 @@ export const checkRepo = async (
   console.log(chalk.blue(` Repo: ${repo}`));
 
   try {
+    if (!/^https:\/\/github.com/.test(repo)) {
+      throw new Error("Eso no es una URL de GitHub 😕");
+    }
+
     const { owner, repoName } = extractInfoRepo(repo);
 
     const expectedRepoPrefix = getExpectedRepoPrefix(

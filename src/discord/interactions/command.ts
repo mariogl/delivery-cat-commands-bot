@@ -58,6 +58,7 @@ const processChatCommand = async (
     const frontProd = options.getString("front-prod");
     const backRepo = options.getString("back-repo");
     const backProd = options.getString("back-prod");
+    const partner = options.getUser("partner");
 
     if (!frontRepo && !backRepo) {
       throw new Error("Entrega incompleta 😫");
@@ -75,6 +76,21 @@ const processChatCommand = async (
       );
     }
 
+    if (partner) {
+      let {
+        nickname: partnerNickname,
+        // eslint-disable-next-line prefer-const
+        user: { username: partnerUsername },
+      } = await guild.members.fetch(partner);
+
+      partnerNickname = normalizeNickname(partnerNickname || partnerUsername);
+
+      console.log(chalk.blue("\nReceived partner:"));
+      console.log(partnerNickname);
+
+      deliveryData.nickname += `-${partnerNickname}`;
+    }
+
     if (frontRepo) {
       console.log(chalk.blue("\nChecking front repo..."));
       await checkRepo("front", frontRepo, deliveryData);
@@ -89,7 +105,7 @@ const processChatCommand = async (
       await checkProd("back", backProd);
     }
 
-    let replyContent = `${nickname} - ${challengeName}\n`;
+    let replyContent = `${deliveryData.nickname} - ${challengeName}\n`;
     if (frontRepo) {
       replyContent += `Front - repo: ${frontRepo}`;
       replyContent += `\nFront - prod: ${frontProd}`;
