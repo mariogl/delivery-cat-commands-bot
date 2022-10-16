@@ -9,28 +9,19 @@ const commands = [
     .setName("entrega")
     .setDescription("Realizar una entrega")
     .addStringOption((option) =>
-      option
-        .setName("repo-front")
-        .setDescription("Repo del front")
-        .setRequired(true)
-    ),
-  new SlashCommandBuilder()
-    .setName("prueba")
-    .setDescription("Realizar una prueba")
+      option.setName("repo-front").setDescription("Repo del front")
+    )
     .addStringOption((option) =>
-      option
-        .setName("repo-front")
-        .setDescription("Repo del front")
-        .setRequired(true)
-    ),
-  new SlashCommandBuilder()
-    .setName("pruebita")
-    .setDescription("Realizar una prueba pero más pequeñita")
+      option.setName("prod-front").setDescription("URL de producción del front")
+    )
     .addStringOption((option) =>
-      option
-        .setName("repo-front")
-        .setDescription("Repo del front")
-        .setRequired(true)
+      option.setName("repo-back").setDescription("Repo del back")
+    )
+    .addStringOption((option) =>
+      option.setName("prod-back").setDescription("URL de producción del back")
+    )
+    .addUserOption((option) =>
+      option.setName("partner").setDescription("Compañera/o de equipo")
     ),
 ].map((command) => command.toJSON());
 
