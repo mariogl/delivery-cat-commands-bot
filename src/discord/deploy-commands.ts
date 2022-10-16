@@ -9,16 +9,16 @@ const commands = [
     .setName("entrega")
     .setDescription("Realizar una entrega")
     .addStringOption((option) =>
-      option.setName("repo-front").setDescription("Repo del front")
+      option.setName("front-repo").setDescription("Repo del front")
     )
     .addStringOption((option) =>
-      option.setName("prod-front").setDescription("URL de producción del front")
+      option.setName("front-prod").setDescription("URL de producción del front")
     )
     .addStringOption((option) =>
-      option.setName("repo-back").setDescription("Repo del back")
+      option.setName("back-repo").setDescription("Repo del back")
     )
     .addStringOption((option) =>
-      option.setName("prod-back").setDescription("URL de producción del back")
+      option.setName("back-prod").setDescription("URL de producción del back")
     )
     .addUserOption((option) =>
       option.setName("partner").setDescription("Compañera/o de equipo")
