@@ -116,7 +116,7 @@ const processChatCommand = async (
 
     let challengeDB = await Challenge.findOne({
       name: challengeName,
-    });
+    }).exec();
 
     if (!challengeDB) {
       challengeDB = await Challenge.create({
@@ -128,7 +128,7 @@ const processChatCommand = async (
 
     const projectExists = await Project.findOne({
       name: `${nickname} - ${challengeName}`,
-    });
+    }).exec();
 
     if (!projectExists) {
       await Project.create({
@@ -167,7 +167,7 @@ const processChatCommand = async (
           front: "",
           back: "",
         },
-      });
+      }).exec();
     }
 
     if (sameDeliveryMessage) {

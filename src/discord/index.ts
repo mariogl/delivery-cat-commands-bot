@@ -1,6 +1,7 @@
-import "../loadEnvironment.js";
-import discord from "discord.js";
 import chalk from "chalk";
+import discord from "discord.js";
+import "../loadEnvironment.js";
+import "./deploy-commands.js";
 import processChatCommand from "./interactions/command.js";
 
 const { Client, GatewayIntentBits } = discord;

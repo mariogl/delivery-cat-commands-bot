@@ -1,8 +1,8 @@
-import http from "http";
 import chalk from "chalk";
-import "./loadEnvironment.js";
-import "./discord";
+import http from "http";
 import connectDB from "./db/index.js";
+import "./discord/index.js";
+import "./loadEnvironment.js";
 
 (async () => {
   http
