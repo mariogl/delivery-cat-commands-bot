@@ -22,6 +22,9 @@ const commands = [
     )
     .addUserOption((option) =>
       option.setName("partner").setDescription("Compañera/o de equipo")
+    )
+    .addUserOption((option) =>
+      option.setName("partner2").setDescription("Compañera/o de equipo")
     ),
 ].map((command) => command.toJSON());
 
