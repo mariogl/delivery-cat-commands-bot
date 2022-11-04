@@ -63,7 +63,7 @@ export const checkProd = async (side: Side, prod: string) => {
     return;
   }
 
-  try {
+  /* try {
     await axios.get(prod);
   } catch (error) {
     console.log("ERRROOOOROOOROROR");
@@ -71,7 +71,7 @@ export const checkProd = async (side: Side, prod: string) => {
     throw new Error(
       `🚫 ${getRandomYield()} Error en producción ${side}: la URL devuelve 404 😶‍🌫️`
     );
-  }
+  } */
 
   console.log(chalk.blue(` URL prod: ${prod}`));
 };
