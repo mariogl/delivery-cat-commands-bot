@@ -123,11 +123,11 @@ const processChatCommand = async (
 
     let replyContent = `${deliveryData.nickname} - ${challengeName}\n`;
     if (frontRepo) {
-      replyContent += `Front - repo: ${frontRepo}`;
+      replyContent += `\nFront - repo: ${frontRepo}`;
       replyContent += `\nFront - prod: ${frontProd}`;
     } else if (backRepo) {
-      replyContent += `Back - repo: ${backRepo}`;
-      replyContent += `Back - prod: ${backProd}`;
+      replyContent += `\nBack - repo: ${backRepo}`;
+      replyContent += `\nBack - prod: ${backProd}`;
     }
 
     let challengeDB = await Challenge.findOne({
