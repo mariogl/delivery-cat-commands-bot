@@ -1,4 +1,3 @@
-import axios from "axios";
 import discord from "discord.js";
 import { Octokit } from "@octokit/rest";
 import chalk from "chalk";

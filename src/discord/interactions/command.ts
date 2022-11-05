@@ -121,7 +121,9 @@ const processChatCommand = async (
       await checkProd("back", backProd);
     }
 
-    let replyContent = `${deliveryData.nickname} - ${challengeName}\n`;
+    let replyContent = `Challenge ${
+      partner || partner2 ? "de grupo" : ""
+    } ${challengeName} de ${deliveryData.nickname}\n`;
     if (frontRepo) {
       replyContent += `\nFront - repo: ${frontRepo}`;
       replyContent += `\nFront - prod: ${frontProd}`;
