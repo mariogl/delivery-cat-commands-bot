@@ -125,7 +125,8 @@ const processChatCommand = async (
     if (frontRepo) {
       replyContent += `\nFront - repo: ${frontRepo}`;
       replyContent += `\nFront - prod: ${frontProd}`;
-    } else if (backRepo) {
+    }
+    if (backRepo) {
       replyContent += `\nBack - repo: ${backRepo}`;
       replyContent += `\nBack - prod: ${backProd}`;
     }
